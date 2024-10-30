@@ -79,6 +79,30 @@ const createUserService = (data) => __awaiter(void 0, void 0, void 0, function* 
 /***
  * retrieves all the user data from the database
  */
+// const getUsersFromDB = async () => {
+//   const result = await prisma.user.findMany({
+//     select: {
+//       id: true,
+//       name: true,
+//       email: true,
+//       contactNumber: true,
+//       role: true,
+//       active: true,
+//       createdAt: true,
+//       updatedAt: true,
+//       password: false,
+//       _count: {
+//         select: {
+//           volunteerApplications: true,
+//         },
+//       },
+//     },
+//     orderBy: {
+//       updatedAt: "desc",
+//     },
+//   });
+//   return result;
+// };
 const getUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.findMany({
         select: {
@@ -90,7 +114,11 @@ const getUsersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
             active: true,
             createdAt: true,
             updatedAt: true,
-            password: false,
+            _count: {
+                select: {
+                    volunteerApplications: true,
+                },
+            },
         },
         orderBy: {
             updatedAt: "desc",
@@ -123,6 +151,7 @@ const getUserProfileFromDB = (userId) => __awaiter(void 0, void 0, void 0, funct
  *updates user data such as name and email in the db and this is ensured using zod
  */
 const updateUserDataInDB = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("service userid: ", id, "data: ", data);
     const result = yield prisma_1.default.user.update({
         where: {
             id,

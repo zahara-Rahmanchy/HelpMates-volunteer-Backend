@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const user_routes_1 = require("../app/modules/User/user.routes");
 const auth_routes_1 = require("../app/modules/Auth/auth.routes");
-const pet_routes_1 = require("../app/modules/Pets/pet.routes");
-const adoptionRoutes_1 = require("../app/modules/AdoptionRequests/adoptionRoutes");
+const VolunteerAppRoutes_1 = require("../app/modules/VolunteerApplications/VolunteerAppRoutes");
+const opportunity_routes_1 = require("../app/modules/Opportunity/opportunity.routes");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -20,11 +20,11 @@ const moduleRoutes = [
     },
     {
         path: "/",
-        route: pet_routes_1.petRoutes,
+        route: opportunity_routes_1.opportunityRoutes,
     },
     {
         path: "/",
-        route: adoptionRoutes_1.adoptionRequestRoutes,
+        route: VolunteerAppRoutes_1.volunteerApplicationtRoutes,
     },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.route));

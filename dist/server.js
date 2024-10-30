@@ -13,12 +13,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
+const moment_1 = __importDefault(require("moment"));
 const port = 5000;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const server = app_1.default.listen(port, () => {
             console.log("Server running on port: ", port);
             console.log("Access the server at:", `http://${"localhost"}:${port}`);
+            // Example usage:
+            const localTimeInput = "2024-10-20T14:00:00";
+            const utcTime = (0, moment_1.default)(localTimeInput)
+                .local()
+                .utc()
+                .format("hh:mm A,\n MM/DD/YYYY");
+            console.log((0, moment_1.default)(localTimeInput).utc().toDate());
+            console.log("Local time in UTC: ", utcTime);
         });
     });
 }

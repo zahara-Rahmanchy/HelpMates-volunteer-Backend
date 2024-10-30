@@ -15,10 +15,10 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
     res.send({
-        Message: "Pet Adoption System",
+        Message: "Volunteering platform",
     });
 });
-app.use("/api", routes_1.default);
+app.use("/api/v1", routes_1.default);
 // global error handler middleware used for handling all the errors and providing details
 app.use(globalErrorHandler_1.default);
 // this one is used for not found route

@@ -61,7 +61,7 @@ const getUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 
 }));
 // updating user data such as name and email in the db
 const updateUserData = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("user controller:", req.body, "id", req);
+    console.log("user controller:", req.body);
     const _b = req.body, { id } = _b, rest = __rest(_b, ["id"]);
     const result = yield user_service_1.userServices.updateUserDataInDB(String(id), rest);
     (0, sendResponse_1.default)(res, {

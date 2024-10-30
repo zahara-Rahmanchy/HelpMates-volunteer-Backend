@@ -1,4 +1,4 @@
-# Pet Adoption System- PawFectMatch
+# Volunteer Platform - Help Mates
 
 ### Tech Stack
 
@@ -10,22 +10,7 @@
 
 ### Description & Features
 
-    - The Pet Adoption System:PawFectMatch is an application which helps adoption process
-      of animals. It connects users to potential adopters. Users can store pet informations and also can request for pet adoption.
-
-    - Users can register using name,email and password.
-
-    - Authentication is done using jwt for secure authentication and authorization.
-
-    - Users(pet owners) can add their pet details,get pet details and update them
-
-    - Users can make adoption requests which includes information about user,petId and
-      pet ownership experience and status of the request.
-
-    - The status of the adoption request is updated based on the user,updating status
-      to rejected,accepted or default value which is pending.
-
-    - Users can view and update their user profile informations
+    -
 
 ## To run the file locally perform the following steps
 
@@ -49,4 +34,4 @@
 
 ### Live Link
 
-- https://assignment-8-cyan.vercel.app
+-

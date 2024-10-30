@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.get("/", (req: Request, res: Response) => {
   res.send({
-    Message: "Pet Adoption System",
+    Message: "Volunteering platform",
   });
 });
 
