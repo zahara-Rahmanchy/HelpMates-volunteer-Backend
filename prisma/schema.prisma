@@ -38,6 +38,7 @@ model Opportunity {
   organization String
   skillsRequired String[] @default([]) // List of skills required for the opportunity
   duration      Int  // Duration of the volunteer work
+  benefit String @default("")
   startDate DateTime
   endDate DateTime
   status OpportunityStatus @default(OPEN) // Whether the opportunity is open, closed, etc.

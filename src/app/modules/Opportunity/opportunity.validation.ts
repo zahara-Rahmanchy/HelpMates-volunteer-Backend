@@ -38,6 +38,7 @@ const opportunityValidationToInsert = z.object({
       title: z.string().min(1, "Title is required."),
       image: z.array(z.string()).min(1, "At least one image is required."),
       description: z.string().min(100, "Detailed description is required."),
+      benefit: z.string({required_error: "Benefit is required."}),
       location: z.string().min(1, "Location is required."),
       organization: z.string().min(1, "Organization is required."),
       skillsRequired: z
@@ -82,6 +83,11 @@ const opportunityValidationToUpdate = z.object({
       location: z
         .string({
           required_error: "Location is required",
+        })
+        .optional(),
+      benefit: z
+        .string({
+          required_error: "benefit is required",
         })
         .optional(),
       organization: z

@@ -26,6 +26,12 @@ router.get(
   auth(userRoles.Admin),
   volunteerAppController.getVolunteerApplications
 );
+// all application made to a particular opportunity
+// router.get(
+//   "/volunteer-applications/:id",
+//   auth(userRoles.Admin),
+//   volunteerAppController.getVolunteerApplications
+// );
 /**
  * get route to get user specific volunteer requests
  *

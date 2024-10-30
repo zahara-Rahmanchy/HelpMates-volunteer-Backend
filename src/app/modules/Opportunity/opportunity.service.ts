@@ -2,15 +2,12 @@ import * as bcrypt from "bcrypt";
 import prisma from "../../../shared/prisma";
 
 import {opportunitySearchFields, sortByOptions} from "./opportunityConstants";
-import {capitalize} from "./capitalize";
-import {date, number} from "zod";
-import {equal} from "assert";
 import {opportunityUtils} from "./opportunityUtils";
 import {Opportunity, Prisma} from "@prisma/client";
 import ApiError from "../../erros/ApiError";
 import httpStatus from "http-status";
 import {OpportunityUpdate} from "./opportunityInterfaces";
-
+import moment from "moment";
 // creates pet data in the database
 const insertOpportunityDataService = async (data: any) => {
   console.log("data: ", data, "\n");
@@ -25,11 +22,17 @@ const insertOpportunityDataService = async (data: any) => {
   const result = await prisma.opportunity.create({
     data: {
       ...rest,
-      startDate: new Date(startDate),
-      endDate: new Date(endDate),
+      startDate: moment(startDate).utc().toDate(),
+      endDate: moment(startDate).utc().toDate(),
       duration: duration,
     },
   });
+  console.log(
+    "start: ",
+    moment(startDate).local().utc().format("hh:mm A,\n MM/DD/YYYY"),
+    "end: ",
+    moment(endDate).local().utc().format("hh:mm A,\n MM/DD/YYYY")
+  );
   // console.log({result});
   return result;
 };
@@ -93,7 +96,7 @@ const getOpportunityDataFromDB = async (filters: any, metaOptions: any) => {
   if (start_date) {
     andConditions.push({
       startDate: {
-        gte: new Date(start_date),
+        gte: moment(start_date).utc().toDate(),
       },
     });
   }
@@ -149,7 +152,7 @@ const getDataById = async (id: string) => {
   return result;
 };
 
-// // get Opportunity data along with adoption requests and user information
+// // get Opportunity data along with volunteer requests and user information
 const getDetailedDataFromDb = async () => {
   const result = await prisma.opportunity.findMany({
     include: {
@@ -218,8 +221,8 @@ const updateOpportunityInDB = async (
 
   if (start && end) {
     const {startDate, endDate, duration} = opportunityUtils.validateDates(
-      new Date(start),
-      new Date(end)
+      moment(start).utc().toDate(),
+      moment(end).utc().toDate()
     );
     console.log("both dates given", startDate, endDate, duration);
     start_date = startDate;
@@ -229,20 +232,8 @@ const updateOpportunityInDB = async (
 
   // If only startDate is given, compare with DB endDate
   if (start && !end) {
-    // startDate = new Date(start);
-    // if (
-    //   isOpportunityPresent?.endDate &&
-    //   startDate >= isOpportunityPresent?.endDate
-    // ) {
-    //   throw new Error("startDate must be earlier than the existing endDate.");
-    // }
-    // duration = opportunityUtils.calculateDurationInHours(
-    //   String(start),
-    //   String(end)
-    // );
-
     const {startDate, endDate, duration} = opportunityUtils.validateDates(
-      new Date(start),
+      moment(start).utc().toDate(),
       isOpportunityPresent?.endDate as Date
     );
     console.log("only startDate given: ", startDate, endDate, duration);
@@ -255,7 +246,7 @@ const updateOpportunityInDB = async (
   if (!start && end) {
     const {startDate, endDate, duration} = opportunityUtils.validateDates(
       isOpportunityPresent?.startDate as Date,
-      new Date(end)
+      moment(end).utc().toDate()
     );
     console.log("only endDate given: ", startDate, endDate, duration);
     start_date = startDate;
@@ -306,6 +297,19 @@ const updateOpportunityInDB = async (
   return result;
 };
 
+const getSkillsList = async () => {
+  const res = await prisma.$queryRaw<{array: String[]}[]>`
+
+    SELECT ARRAY(SELECT DISTINCT INITCAP(LOWER(unnest("skillsRequired"))) 
+    from "opportunities" 
+    WHERE "skillsRequired" 
+    IS NOT NULL) as array
+    `;
+  console.log("skills: ", res, "\n", res[0].array);
+  return res[0].array;
+};
+// Output unique skills
+
 // // // delete pet data based on the peId
 const deleteOpportunityFromDB = async (id: string) => {
   const result = await prisma.opportunity.delete({
@@ -324,6 +328,7 @@ export const opportunityServices = {
   updateOpportunityInDB,
   deleteOpportunityFromDB,
   getDetailedDataFromDb,
+  getSkillsList,
 };
 
 // break down of the map

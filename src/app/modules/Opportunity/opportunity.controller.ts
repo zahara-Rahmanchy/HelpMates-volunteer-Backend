@@ -50,10 +50,25 @@ const getOpportunityData = catchAsync(async (req: request, res: Response) => {
   });
 });
 
+// get all skills list
+
+const getSkills = catchAsync(async (req: request, res: Response) => {
+  const result = await opportunityServices.getSkillsList();
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Skills retrieved successfully",
+    data: result,
+  });
+});
+
 // // get data by Opportunity id
 const getOpportunityDataById = catchAsync(
   async (req: request, res: Response) => {
-    const result = await opportunityServices.getDataById(req.params.petId);
+    console.log("req.params: ", req.params);
+    const result = await opportunityServices.getDataById(
+      req.params.opportunityId
+    );
     sendResponse(res, {
       success: true,
       statusCode: 200,
@@ -88,7 +103,7 @@ const deleteOpportunityData = catchAsync(
     console.log("user controller:", req.body, "id", req.params);
 
     const result = await opportunityServices.deleteOpportunityFromDB(
-      req.params.petId
+      req.params.opportunityId
     );
 
     sendResponse(res, {
@@ -100,10 +115,8 @@ const deleteOpportunityData = catchAsync(
   }
 );
 
-// // getting data in the db based on petId
+// // getting detailed data from db for admin including volunteering apps
 const getDetailedData = catchAsync(async (req: request, res: Response) => {
-  console.log("user controller:", req.body, "id", req.params);
-
   const result = await opportunityServices.getDetailedDataFromDb();
 
   sendResponse(res, {
@@ -120,4 +133,5 @@ export const opportunityControllers = {
   getOpportunityDataById,
   deleteOpportunityData,
   getDetailedData,
+  getSkills,
 };

@@ -1,3 +1,5 @@
+import moment from "moment";
+
 function convertDuration(durationInHours: number) {
   // Constants for time conversions
   const hoursInDay = 24;
@@ -24,16 +26,13 @@ function convertDuration(durationInHours: number) {
 
   return parts.length > 0 ? parts.join(", ") : "0 hours";
 }
-const calculateDurationInHours = (
-  startDate: string,
-  endDate: string
-): number => {
-  const startDateTime = new Date(startDate);
-  const endDateTime = new Date(endDate);
+const calculateDurationInHours = (startDate: Date, endDate: Date): number => {
+  const startMoment = moment(startDate);
+  const endMoment = moment(endDate);
+  const diffInMilliseconds = endMoment.diff(startMoment);
+  const diffInHours = moment.duration(diffInMilliseconds).asHours();
 
-  const durationInMilliseconds =
-    endDateTime.getTime() - startDateTime.getTime();
-  return durationInMilliseconds / (1000 * 60 * 60); // Convert to hours
+  return diffInHours; // Convert to hours
 };
 
 const validateDates = (startDate: Date, endDate: Date) => {
@@ -43,8 +42,8 @@ const validateDates = (startDate: Date, endDate: Date) => {
     throw new Error("startDate cannot be greater than or equal to endDate.");
   }
   const duration = opportunityUtils.calculateDurationInHours(
-    String(startDate),
-    String(endDate)
+    startDate,
+    endDate
   );
   return {startDate, endDate, duration};
 };

@@ -1,6 +1,6 @@
 import * as bcrypt from "bcrypt";
 import prisma from "../../../shared/prisma";
-import {Prisma, User, userRoles} from "@prisma/client";
+import {ApplicationStatus, Prisma, User, userRoles} from "@prisma/client";
 import ApiError from "../../erros/ApiError";
 import httpStatus from "http-status";
 /**
@@ -49,6 +49,32 @@ const createUserService = async (data: any) => {
 /***
  * retrieves all the user data from the database
  */
+// const getUsersFromDB = async () => {
+//   const result = await prisma.user.findMany({
+//     select: {
+//       id: true,
+//       name: true,
+//       email: true,
+//       contactNumber: true,
+//       role: true,
+//       active: true,
+//       createdAt: true,
+//       updatedAt: true,
+//       password: false,
+//       _count: {
+//         select: {
+//           volunteerApplications: true,
+
+//         },
+//       },
+//     },
+//     orderBy: {
+//       updatedAt: "desc",
+//     },
+//   });
+
+//   return result;
+// };
 const getUsersFromDB = async () => {
   const result = await prisma.user.findMany({
     select: {
@@ -60,7 +86,11 @@ const getUsersFromDB = async () => {
       active: true,
       createdAt: true,
       updatedAt: true,
-      password: false,
+      _count: {
+        select: {
+          volunteerApplications: true,
+        },
+      },
     },
     orderBy: {
       updatedAt: "desc",
@@ -96,6 +126,7 @@ const getUserProfileFromDB = async (userId: string) => {
  *updates user data such as name and email in the db and this is ensured using zod
  */
 const updateUserDataInDB = async (id: string, data: Partial<User>) => {
+  console.log("service userid: ", id, "data: ", data);
   const result = await prisma.user.update({
     where: {
       id,

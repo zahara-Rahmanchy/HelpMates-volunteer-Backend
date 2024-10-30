@@ -17,6 +17,7 @@ const userUpdateValidation = z.object({
       id: z.string().optional(),
       name: z.string().optional(),
       email: z.string().email().optional(),
+      contactNumber: z.string().optional(),
       role: z.enum([userRoles.Admin, userRoles.User]).optional(),
       active: z.boolean().optional(),
     })

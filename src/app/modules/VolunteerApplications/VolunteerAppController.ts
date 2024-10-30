@@ -38,6 +38,8 @@ const getVolunteerApplications = catchAsync(
   }
 );
 
+// get applications by opportunity id
+
 /*
   get VolunteerApplication made by specific user
 */

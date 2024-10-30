@@ -20,17 +20,19 @@ router.post(
   opportunityControllers.insertOpportunityData
 );
 /*
-get route to opportunities pet data,here  auth is used to authenticate user so that only 
+get route to opportunities  data,here  auth is used to authenticate user so that only 
 valid users can access the data
 */
 router.get("/opportunities", opportunityControllers.getOpportunityData);
 
+// get skills list for filtering
+router.get("/skills", opportunityControllers.getSkills);
 /*
 //     get route to fetch pet data bny id ,
 // */
 router.get(
   "/opportunities/:opportunityId",
-  auth(userRoles.Admin, userRoles.User),
+  // auth(userRoles.Admin, userRoles.User),
   opportunityControllers.getOpportunityDataById
 );
 
@@ -40,7 +42,7 @@ router.get(
 */
 router.put(
   "/opportunity/:opportunityId",
-  // auth(userRoles.Admin),
+  auth(userRoles.Admin),
   validateRequest(opportunityValidationSchema.opportunityValidationToUpdate),
   opportunityControllers.updateOpportunityData
 );
@@ -48,20 +50,20 @@ router.put(
 /**
  * route to delete pet data, only admins can
  */
-// router.delete(
-//   "/opportunity/:opportunityId",
-//   auth(userRoles.Admin),
+router.delete(
+  "/opportunity/:opportunityId",
+  auth(userRoles.Admin),
 
-//   opportunityControllers.deleteOpportunityData
-// );
+  opportunityControllers.deleteOpportunityData
+);
 
 /**
- * route to get pet data, only admins can
+ * route to get opportunity data, only admins can
  */
-// router.get(
-//   "/detailed-opportunities",
-//   auth(userRoles.Admin),
+router.get(
+  "/detailed-opportunities",
+  auth(userRoles.Admin),
 
-//   opportunityControllers.getDetailedData
-// );
+  opportunityControllers.getDetailedData
+);
 export const opportunityRoutes = router;

@@ -125,7 +125,36 @@ const getParticipatedOppFromDB = async (id: string) => {
       opportunity: true,
     },
   });
-
+  
+    const currentDate = new Date();
+  
+    const newresult = await prisma.volunteerApplication.findMany({
+      where: {
+        userId: id,
+        status: ApplicationStatus.APPROVED,
+        OR: [
+          {
+            opportunity: {
+              endDate: {
+                lt: currentDate, // Completed Opportunities
+              },
+            },
+          },
+          {
+            opportunity: {
+              startDate: {
+                gt: currentDate, // Upcoming Opportunities
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        opportunity: true,
+      },
+    });
+  
+console.log("new result: ",newresult)
   console.log("adopted service", {result});
   return result;
 };
