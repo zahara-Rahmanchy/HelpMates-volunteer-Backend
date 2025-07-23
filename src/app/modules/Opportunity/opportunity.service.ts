@@ -51,9 +51,10 @@ const getOpportunityDataFromDB = async (filters: any, metaOptions: any) => {
   const validOptions =
     sortBy && sortByOptions.includes(sortBy) ? sortBy : "createdAt";
 
-  opportunitySearchFields.map(field => {
-    console.log(field, `{${field}: {contains:searchTerm,mode:"insensitve"}}`);
-  });
+console.log("valid: ",validOptions)
+  // opportunitySearchFields.map(field => {
+  //   console.log(field, `{${field}: {contains:searchTerm,mode:"insensitve"}}`);
+  // });
   const andConditions: Prisma.OpportunityWhereInput[] = [];
 
   // mapping all the field values and applying the same condiitons
@@ -70,14 +71,14 @@ const getOpportunityDataFromDB = async (filters: any, metaOptions: any) => {
     });
   }
 
-  if (location) {
-    andConditions.push({
-      location: {
-        equals: location,
-        mode: "insensitive",
-      },
-    });
-  }
+  // if (location) {
+  //   andConditions.push({
+  //     location: {
+  //       equals: location,
+  //       mode: "insensitive",
+  //     },
+  //   });
+  // }
   if (skills) {
     andConditions.push({
       skillsRequired: {
@@ -129,7 +130,7 @@ const getOpportunityDataFromDB = async (filters: any, metaOptions: any) => {
             [validOptions]: "desc",
           },
   });
-  console.log({result}, {total});
+  // console.log({result}, {total});
 
   const meta = {
     page: Number(pageCount),

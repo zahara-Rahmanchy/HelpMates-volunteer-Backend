@@ -4,6 +4,7 @@ import {AuthRoutes} from "../app/modules/Auth/auth.routes";
 
 import {volunteerApplicationtRoutes} from "../app/modules/VolunteerApplications/VolunteerAppRoutes";
 import {opportunityRoutes} from "../app/modules/Opportunity/opportunity.routes";
+import {MetaRoutes} from "../app/modules/MetaData/MetaDataRoute";
 
 const router = express.Router();
 
@@ -23,6 +24,10 @@ const moduleRoutes = [
   {
     path: "/",
     route: volunteerApplicationtRoutes,
+  },
+  {
+    path: "/",
+    route: MetaRoutes,
   },
 ];
 

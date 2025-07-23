@@ -1,5 +1,7 @@
 # Volunteer Platform - Help Mates
 
+### Server
+
 ### Tech Stack
 
     - Typescript

@@ -12,8 +12,11 @@ import globalErrorHandler from "./middlewares/globalErrorHandler";
 import router from "./routes";
 
 const app: Application = express();
-
-app.use(cors());
+// {
+//   origin: 'https://shoemanagementsystem.netlify.app',
+//   credentials: true,
+// }
+app.use( cors());
 
 // parsers
 app.use(express.json());

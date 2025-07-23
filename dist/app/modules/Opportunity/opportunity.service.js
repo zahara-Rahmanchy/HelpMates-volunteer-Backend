@@ -56,9 +56,10 @@ const getOpportunityDataFromDB = (filters, metaOptions) => __awaiter(void 0, voi
     const pageCount = page ? page : 1;
     const dataLimit = limit ? limit : 10;
     const validOptions = sortBy && opportunityConstants_1.sortByOptions.includes(sortBy) ? sortBy : "createdAt";
-    opportunityConstants_1.opportunitySearchFields.map(field => {
-        console.log(field, `{${field}: {contains:searchTerm,mode:"insensitve"}}`);
-    });
+    console.log("valid: ", validOptions);
+    // opportunitySearchFields.map(field => {
+    //   console.log(field, `{${field}: {contains:searchTerm,mode:"insensitve"}}`);
+    // });
     const andConditions = [];
     // mapping all the field values and applying the same condiitons
     if (searchTerm) {
@@ -73,14 +74,14 @@ const getOpportunityDataFromDB = (filters, metaOptions) => __awaiter(void 0, voi
             }),
         });
     }
-    if (location) {
-        andConditions.push({
-            location: {
-                equals: location,
-                mode: "insensitive",
-            },
-        });
-    }
+    // if (location) {
+    //   andConditions.push({
+    //     location: {
+    //       equals: location,
+    //       mode: "insensitive",
+    //     },
+    //   });
+    // }
     if (skills) {
         andConditions.push({
             skillsRequired: {
@@ -129,7 +130,7 @@ const getOpportunityDataFromDB = (filters, metaOptions) => __awaiter(void 0, voi
                 [validOptions]: "desc",
             },
     });
-    console.log({ result }, { total });
+    // console.log({result}, {total});
     const meta = {
         page: Number(pageCount),
         limit: Number(dataLimit),
