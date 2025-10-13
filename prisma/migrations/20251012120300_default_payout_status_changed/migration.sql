@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Payout" ALTER COLUMN "status" SET DEFAULT 'INITIALIZED';

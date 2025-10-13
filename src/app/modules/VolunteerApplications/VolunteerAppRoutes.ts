@@ -63,4 +63,13 @@ router.put(
   volunteerAppController.updateVolunteerApplication
 );
 
+
+
+// get approved applications for payments
+
+router.get("/approved-applications-for-payments",
+  // auth(userRoles.Admin),
+  volunteerAppController.getApprovedApplications
+)
+
 export const volunteerApplicationtRoutes = router;

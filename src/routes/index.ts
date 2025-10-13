@@ -5,6 +5,7 @@ import {AuthRoutes} from "../app/modules/Auth/auth.routes";
 import {volunteerApplicationtRoutes} from "../app/modules/VolunteerApplications/VolunteerAppRoutes";
 import {opportunityRoutes} from "../app/modules/Opportunity/opportunity.routes";
 import {MetaRoutes} from "../app/modules/MetaData/MetaDataRoute";
+import { PayoutRoutes } from "../app/modules/Payouts/payout.route";
 
 const router = express.Router();
 
@@ -29,6 +30,10 @@ const moduleRoutes = [
     path: "/",
     route: MetaRoutes,
   },
+  {
+    path: "/",
+    route: PayoutRoutes
+  }
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.route));

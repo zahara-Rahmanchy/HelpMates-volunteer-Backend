@@ -158,6 +158,48 @@ console.log("new result: ",newresult)
   console.log("adopted service", {result});
   return result;
 };
+const getApprovedApplicationsFromDB = async()=>{
+    const result = await prisma.volunteerApplication.findMany({
+      where:{
+        status:ApplicationStatus.APPROVED,
+        opportunity:{
+          stipend: { gt : 0}
+        }
+      },
+      
+      include:{
+        opportunity:{
+         
+          select:{
+            title:true,
+            organization:true,
+            stipend:true
+          },
+          
+        },
+        user:{
+          select:{
+            name:true,
+            email:true,
+            paypalEmail:true
+          }
+        },
+      
+        payouts: {
+          select: {
+            status: true,
+            createdAt: true,
+          },
+        },
+
+
+      }
+    })
+    console.log("payouts: ",result)
+    return result
+}
+
+
 
 export const volunteerAppServices = {
   insertVolunteerApplicationToDB,
@@ -165,4 +207,5 @@ export const volunteerAppServices = {
   updateVolunteerApplicationInDB,
   getParticipatedOppFromDB,
   getVolunteerApplicationByIdFromDB,
+  getApprovedApplicationsFromDB
 };

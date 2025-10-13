@@ -11,8 +11,10 @@
 //     message = (error.meta?.cause as string) || "Record not found!";
 //     errors = [
 //       {
-//         path: "",
-//         message,
+//           message,
+//           success: false,
+//           statusCode: 0,
+//           errorDetails: error
 //       },
 //     ];
 //   } else if (error.code === "P2003") {
@@ -20,8 +22,10 @@
 //       message = "Delete failed";
 //       errors = [
 //         {
-//           path: "",
-//           message,
+//             message,
+//             success: false,
+//             statusCode: 0,
+//             errorDetails: undefined
 //         },
 //       ];
 //     }

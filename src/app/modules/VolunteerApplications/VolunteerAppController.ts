@@ -100,10 +100,26 @@ const getVolunteeringParticipated = catchAsync(
     });
   }
 );
+
+// only approved applications and those that have stipend more than 0
+const getApprovedApplications = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await volunteerAppServices.getApprovedApplicationsFromDB();
+
+    return sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Approved Applications fetched successfully!",
+      data: result,
+    });
+  }
+);
+
 export const volunteerAppController = {
   insertVolunteerApplication,
   getVolunteerApplications,
   getVolunteerApplicationsById,
   getVolunteeringParticipated,
   updateVolunteerApplication,
+  getApprovedApplications
 };
