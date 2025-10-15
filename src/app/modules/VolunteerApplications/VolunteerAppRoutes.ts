@@ -68,7 +68,7 @@ router.put(
 // get approved applications for payments
 
 router.get("/approved-applications-for-payments",
-  // auth(userRoles.Admin),
+  auth(userRoles.Admin),
   volunteerAppController.getApprovedApplications
 )
 

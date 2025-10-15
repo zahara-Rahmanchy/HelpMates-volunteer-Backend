@@ -5,10 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.opportunityRoutes = void 0;
 const express_1 = __importDefault(require("express"));
-// import {petControllers} from "./opportunity.controller";
 const auth_1 = __importDefault(require("../../../middlewares/auth"));
 const validateRequest_1 = __importDefault(require("../../../middlewares/validateRequest"));
-// import {petValidationSchema} from "./opportunity.validation";
 const client_1 = require("@prisma/client");
 const opportunity_controller_1 = require("./opportunity.controller");
 const opportunity_validation_1 = require("./opportunity.validation");

@@ -42,4 +42,6 @@ put route to update adoption status,here first auth is used to authenticate user
 and then req body is validated using zod schema to ensure status field and its enumvalues
 */
 router.put("/volunteer-application/:applicationId", (0, auth_1.default)(client_1.userRoles.Admin), (0, validateRequest_1.default)(VolunteerAppValidation_1.volunteerAppValidationSchema.updateVolunteerAppStatus), VolunteerAppController_1.volunteerAppController.updateVolunteerApplication);
+// get approved applications for payments
+router.get("/approved-applications-for-payments", (0, auth_1.default)(client_1.userRoles.Admin), VolunteerAppController_1.volunteerAppController.getApprovedApplications);
 exports.volunteerApplicationtRoutes = router;

@@ -84,10 +84,21 @@ const getVolunteeringParticipated = (0, catchAsync_1.default)((req, res) => __aw
         data: result,
     });
 }));
+// only approved applications and those that have stipend more than 0
+const getApprovedApplications = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield volunteerAppServices_1.volunteerAppServices.getApprovedApplicationsFromDB();
+    return (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: "Approved Applications fetched successfully!",
+        data: result,
+    });
+}));
 exports.volunteerAppController = {
     insertVolunteerApplication,
     getVolunteerApplications,
     getVolunteerApplicationsById,
     getVolunteeringParticipated,
     updateVolunteerApplication,
+    getApprovedApplications
 };

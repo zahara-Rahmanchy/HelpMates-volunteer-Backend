@@ -9,6 +9,7 @@ const auth_routes_1 = require("../app/modules/Auth/auth.routes");
 const VolunteerAppRoutes_1 = require("../app/modules/VolunteerApplications/VolunteerAppRoutes");
 const opportunity_routes_1 = require("../app/modules/Opportunity/opportunity.routes");
 const MetaDataRoute_1 = require("../app/modules/MetaData/MetaDataRoute");
+const payout_route_1 = require("../app/modules/Payouts/payout.route");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -31,6 +32,10 @@ const moduleRoutes = [
         path: "/",
         route: MetaDataRoute_1.MetaRoutes,
     },
+    {
+        path: "/",
+        route: payout_route_1.PayoutRoutes
+    }
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.route));
 exports.default = router;

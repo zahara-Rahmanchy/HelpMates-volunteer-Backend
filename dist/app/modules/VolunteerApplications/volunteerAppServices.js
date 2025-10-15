@@ -143,10 +143,45 @@ const getParticipatedOppFromDB = (id) => __awaiter(void 0, void 0, void 0, funct
     console.log("adopted service", { result });
     return result;
 });
+const getApprovedApplicationsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prisma_1.default.volunteerApplication.findMany({
+        where: {
+            status: client_1.ApplicationStatus.APPROVED,
+            opportunity: {
+                stipend: { gt: 0 }
+            }
+        },
+        include: {
+            opportunity: {
+                select: {
+                    title: true,
+                    organization: true,
+                    stipend: true
+                },
+            },
+            user: {
+                select: {
+                    name: true,
+                    email: true,
+                    paypalEmail: true
+                }
+            },
+            payouts: {
+                select: {
+                    status: true,
+                    createdAt: true,
+                },
+            },
+        }
+    });
+    console.log("payouts: ", result);
+    return result;
+});
 exports.volunteerAppServices = {
     insertVolunteerApplicationToDB,
     getVolunteerApplicationFromDB,
     updateVolunteerApplicationInDB,
     getParticipatedOppFromDB,
     getVolunteerApplicationByIdFromDB,
+    getApprovedApplicationsFromDB
 };

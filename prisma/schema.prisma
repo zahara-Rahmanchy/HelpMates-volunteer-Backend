@@ -21,7 +21,7 @@ model User {
   paypalEmail           String?
   payouts               Payout[]
   volunteerApplications VolunteerApplication[]
-
+  chats                 ChatMessage[]
   @@map("users")
 }
 
@@ -68,15 +68,28 @@ model Payout {
   amount                 Decimal
   currency               String               @default("USD")
   status                 PayoutStatus         @default(INITIALIZED)
-  transactionId          String?
+  batchStatus             BatchStatus         @default(PENDING)
   createdAt              DateTime             @default(now())
   updatedAt              DateTime             @updatedAt
+  transactionId          String?
   payerId                String?
   senderItemId           String?
   payoutbatchId          String?
   senderbatchId          String?
   user                   User                 @relation(fields: [userId], references: [id])
   volunteerApplication   VolunteerApplication @relation(fields: [volunteerApplicationId], references: [id])
+}
+
+  
+//to save user's chat history with the bot 
+model ChatMessage {
+  id        String   @id @default(cuid())
+  userId    String?  // null for guests
+  user      User?    @relation(fields: [userId], references: [id])
+  sessionId String?  // for guest sessions
+  role      userType     
+  content   String
+  createdAt DateTime @default(now())
 }
 
 enum userRoles {
@@ -100,4 +113,17 @@ enum PayoutStatus {
   SUCCESS
   FAILED
   INITIALIZED
+  BLOCKED
+}
+
+enum BatchStatus {
+  PENDING
+  SUCCESS
+  DENIED
+  PROCESSING
+}
+
+enum userType {
+  user
+  bot
 }

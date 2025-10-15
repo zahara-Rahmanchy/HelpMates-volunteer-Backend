@@ -9,6 +9,10 @@ const http_status_1 = __importDefault(require("http-status"));
 const globalErrorHandler_1 = __importDefault(require("./middlewares/globalErrorHandler"));
 const routes_1 = __importDefault(require("./routes"));
 const app = (0, express_1.default)();
+// {
+//   origin: 'https://shoemanagementsystem.netlify.app',
+//   credentials: true,
+// }
 app.use((0, cors_1.default)());
 // parsers
 app.use(express_1.default.json());

@@ -121,17 +121,19 @@ const getPayoutsFromDB = async()=>{
 // webhook url to get payout status updates: 
 const handleWebhookEvent = async (event: any) => {
   const { event_type, resource } = event;
+  const senderItemId = resource?.payout_item?.sender_item_id;
+  console.log("event_type:", event_type, "\nsenderItemId:", senderItemId);
   console.log("event_type: ",event_type, "\nresoourse: ",resource)
   if (!resource?.sender_item_id) return;
 
   if (event_type === "PAYMENT.PAYOUTS-ITEM.SUCCEEDED") {
     await prisma.payout.updateMany({
-      where: { senderItemId: resource.sender_item_id },
+      where: { senderItemId: senderItemId  },
       data: { status: "SUCCESS", transactionId: resource.transaction_id, updatedAt: new Date() },
     });
   } else if (event_type === "PAYMENT.PAYOUTS-ITEM.FAILED") {
     await prisma.payout.updateMany({
-      where: { senderItemId: resource.sender_item_id },
+      where: { senderItemId: senderItemId  },
       data: { status: "FAILED", updatedAt: new Date() },
     });
   }

@@ -34,7 +34,7 @@ const getPayoutDetails = catchAsync(async(req:Request,res:Response)=>{
   
     const event = req.body;
 
-    
+    console.log("Event from paypal webhook: ", event)
     const result = await PayoutServices.handleWebhookEvent(event);
 
     sendResponse(res,{
